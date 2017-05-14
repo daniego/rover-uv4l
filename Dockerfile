@@ -1,7 +1,5 @@
-# FROM armhfbuild/debian
 FROM resin/rpi-raspbian
 MAINTAINER Daniel Floris <daniel.floris@gmail.com>
-# RUN lsb_release -a
 
 RUN apt-get update && \
     apt-get install -y \
@@ -22,3 +20,13 @@ RUN apt-get update && \
 # uv4l-decoder uv4l-encoder uv4l-mjpegstream uv4l-raspicam uv4l-raspicam-extras uv4l-renderer
 
 ADD uv4l-uvc.conf /etc/uv4l/uv4l-uvc.conf
+
+RUN apt-get remove -y \
+    curl && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LD_PRELOAD /usr/lib/uv4l/uv4lext/armv6l/libuv4lext.so
+
+WORKDIR /
+
+EXPOSE 8080

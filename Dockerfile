@@ -19,8 +19,6 @@ RUN apt-get update && \
 # Here the packages that we need in the future to add support to the raspicam
 # uv4l-decoder uv4l-encoder uv4l-mjpegstream uv4l-raspicam uv4l-raspicam-extras uv4l-renderer
 
-ADD uv4l-uvc.conf /etc/uv4l/uv4l-uvc.conf
-
 RUN apt-get remove -y \
     curl && \
     rm -rf /var/lib/apt/lists/*
@@ -30,3 +28,7 @@ ENV LD_PRELOAD /usr/lib/uv4l/uv4lext/armv6l/libuv4lext.so
 WORKDIR /
 
 EXPOSE 8080
+
+ENV UV4L_PARAMETERS --help
+
+ENTRYPOINT /usr/bin/uv4l $UV4L_PARAMETERS

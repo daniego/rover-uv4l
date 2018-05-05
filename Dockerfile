@@ -14,10 +14,17 @@ RUN apt-get update && \
     uv4l-uvc \
     uv4l-server \
     uv4l-renderer \
+    uv4l-decoder \
+    uv4l-encoder \
+    uv4l-mjpegstream \
+    uv4l-raspicam \
+    uv4l-raspicam-extras \
     fuse
 
 # Here the packages that we need in the future to add support to the raspicam
-# uv4l-decoder uv4l-encoder uv4l-mjpegstream uv4l-raspicam uv4l-raspicam-extras uv4l-renderer
+# uv4l-decoder uv4l-encoder uv4l-mjpegstream uv4l-raspicam uv4l-raspicam-extras
+
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/uv4l/ssl/ssl.key -out /etc/u4ul/ssl/ssl.crt
 
 RUN apt-get remove -y \
     curl && \
